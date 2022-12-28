@@ -29,10 +29,7 @@ export  class App extends Component {
     if (nextValue !== prevValue || prevState.page !== this.state.page) {
       this.setState({ status: "pending" })
       fetch(`${BASE_URL}?q=${searchValue}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`)
-        .then(response => {
-          if (response.ok) { return response.json() }
-          return Promise.reject(new Error(`Відсутні картинки за відповідають критеріям пошуку`))
-        })
+        .then(response => { return response.json() }  )
         .then(response => {
           if (response.hits.length === 0) {
             return (this.setState({ error: "There are no images matching your request! Try another keyring", status: "rejected" }))
@@ -96,8 +93,7 @@ status : "",
         />}
         {status === "rejected" && <div> {this.state.error}</div>}
       
-        {!images && <div> {this.state.error}</div>}
-        {status === "loading" && <Grid
+         {status === "loading" && <Grid
           height="80"
           width="80"
           color="#4fa94d"
